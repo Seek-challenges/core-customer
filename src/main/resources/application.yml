@@ -1,0 +1,33 @@
+server:
+  port: ${APP_PORT:8080}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+
+spring:
+  application:
+    name: core-customer
+  r2dbc:
+    url: r2dbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3306}/${DATABASE_NAME:db_core_customer}
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
+  flyway:
+    enabled: true
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3306}/${DATABASE_NAME:db_core_customer}
+    user: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  cache:
+    type: redis
+    redis:
+      key-prefix: ${spring.application.name}
+      cache-null-values: false
+      use-key-prefix: true
+      time-to-live: ${CACHE_TTL:300}
+  profiles:
+    active: ${APP_ENVIRONMENT:dev}
