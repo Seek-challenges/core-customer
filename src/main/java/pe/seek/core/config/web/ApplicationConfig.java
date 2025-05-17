@@ -22,7 +22,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @ComponentScan({"pe.seek.core.*"})
 @EnableRedisRepositories({"pe.seek.core.*"})
 @EnableR2dbcRepositories({"pe.seek.core.*"})
-public class ApplicationConfig {
+class ApplicationConfig {
 
     @Bean
     @Primary
