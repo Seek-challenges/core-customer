@@ -21,7 +21,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/<ACTIONS_ROLE>
-        aws-region: <AWS_REGION>
+        aws-region: us-east-2
 
     - name: Amazon ECR "Login" Action for GitHub Actions
       uses: aws-actions/amazon-ecr-login@v2
@@ -30,7 +30,7 @@ jobs:
 
     - name: Build, tag, and push Docker image to ECR
       env:
-        ECR_REGISTRY: <ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com
+        ECR_REGISTRY: <ACCOUNT_ID>.dkr.ecr.us-east-2.amazonaws.com
         ECR_REPOSITORY: <REPO_NAME>
         IMAGE_TAG: ${{ github.ref_name }}
       run: |
