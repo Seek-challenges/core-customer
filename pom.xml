@@ -114,7 +114,6 @@
 			<version>${aws.sdk.version}</version>
 		</dependency>
 
-
 		<!-- Util -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
