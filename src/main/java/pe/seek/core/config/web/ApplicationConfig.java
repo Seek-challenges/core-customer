@@ -14,9 +14,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
 @Configuration
+@EnableScheduling
 @ConfigurationPropertiesScan
 @EntityScan({"pe.seek.core.*"})
 @ComponentScan({"pe.seek.core.*"})

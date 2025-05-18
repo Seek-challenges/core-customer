@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Customer {
     private String firstName;
     private String lastName;
-    private Integer phone;
+    private String phone;
     private String age;
     private LocalDate birthDate;
 }

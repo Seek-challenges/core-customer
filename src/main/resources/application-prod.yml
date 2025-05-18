@@ -1,5 +1,14 @@
-
-
+aws:
+  cloud:
+    region: ${AWS_REGION}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+    sqs:
+      publisher:
+        create-customer-notification: https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/create-customer-notification
+      consumer:
+        create-customer-fallback: https://sqs.${AWS_REGION}.amazonaws.com/${AWS_ACCOUNT_ID}/create-customer-fallback
 
 springdoc:
   api-docs:
