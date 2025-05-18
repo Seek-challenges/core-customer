@@ -21,7 +21,7 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 @Component
 @Profile({"prod"})
 @RequiredArgsConstructor
-public class SQSSubscriber {
+class SQSSubscriber {
 
     private final SqsAsyncClient sqsClient;
     private final ObjectMapper objectMapper;
