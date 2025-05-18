@@ -15,7 +15,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import pe.seek.core.customer.domain.Customer;
 
-@EnableCaching
 @Configuration
 class RedisConfig {
 
