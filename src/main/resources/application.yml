@@ -29,13 +29,5 @@ spring:
       cache-null-values: false
       use-key-prefix: true
       time-to-live: ${CACHE_TTL:300}
-  cloud:
-    consul:
-      host: ${CONSUL_HOST:localhost}
-      port: ${CONSUL_PORT:8500}
-      discovery:
-        health-check-interval: 10s
-        prefer-ip-address: true
-        instance-id: ${spring.application.name}:${random.uuid}
   profiles:
     active: ${APP_ENVIRONMENT:dev}
