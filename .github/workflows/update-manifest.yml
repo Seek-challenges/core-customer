@@ -27,7 +27,7 @@ jobs:
       run: |
         cd k8s-manifests/$SERVICE_NAME
         echo "Actualizando tag de imagen a: ${{ github.event.workflow_run.head_branch }} para el servicio $SERVICE_NAME"
-        sed -i "s/^\([[:space:]]*tag:[[:space:]]*\).*/\1${{ github.event.workflow_run.head_branch }}/" values.yaml
+        sed -i "s/^\([[:space:]]*app_tag:[[:space:]]*\).*/\1${{ github.event.workflow_run.head_branch }}/" values.yaml
 
     - name: Commit and push changes
       run: |
