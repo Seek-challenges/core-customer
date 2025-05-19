@@ -1,0 +1,183 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Customer API",
+    "description": "API for managing customers"
+  },
+  "host": "localhost:8080",
+  "basePath": "/v1/customers",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Create a new customer",
+        "description": "Creates a new customer in the system.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Customer created",
+            "schema": {
+              "$ref": "#/definitions/CustomerResponseDTO"
+            }
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        }
+      }
+    },
+    "/{phone}": {
+      "get": {
+        "summary": "Get customer by phone",
+        "description": "Retrieves a customer by their phone number.",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer found",
+            "schema": {
+              "$ref": "#/definitions/CustomerResponseDTO"
+            }
+          },
+          "404": {
+            "description": "Customer not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a customer",
+        "description": "Updates the customer data for the given phone.",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerRequestDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer updated",
+            "schema": {
+              "$ref": "#/definitions/CustomerResponseDTO"
+            }
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a customer",
+        "description": "Deletes a customer by phone number.",
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer deleted"
+          },
+          "404": {
+            "description": "Customer not found"
+          }
+        }
+      }
+    },
+    "/all": {
+      "get": {
+        "summary": "Get all customers",
+        "description": "Retrieves all customers from the system.",
+        "responses": {
+          "200": {
+            "description": "List of customers",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CustomerResponseDTO"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CustomerRequestDTO": {
+      "type": "object",
+      "required": ["firstName", "lastName", "phone", "age", "birthDate"],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "birthDate": {
+          "type": "string"
+        }
+      }
+    },
+    "CustomerResponseDTO": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "age": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

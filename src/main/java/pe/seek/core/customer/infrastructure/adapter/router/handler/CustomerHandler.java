@@ -58,11 +58,11 @@ class CustomerHandler implements CustomerHandlerPort{
 
     @Override
     public Mono<ServerResponse> getAllCustomers(ServerRequest request) {
-        Flux<Customer> customers = customerServicePort.getAllCustomers()
-                .doOnNext(c -> log.info("All Customer found: {}", c.getPhone()));
-
-        return ServerResponse.ok()
-                .body(customers.map(customerMapper::toResponseDTOFromDomain), CustomerResponseDTO.class)
+        return customerServicePort.getAllCustomers()
+                .map(customerMapper::toResponseDTOFromDomain)
+                .collectList()
+                .doOnSuccess(customers -> log.info("Customers retrieved successfully: {}", customers.size()))
+                .flatMap(list -> ServerResponse.ok().bodyValue(list))
                 .onErrorResume(e -> {
                     log.error("Error retrieving customers: {}", e.getMessage());
                     return ServerResponse.status(500).bodyValue("Error retrieving customers");
