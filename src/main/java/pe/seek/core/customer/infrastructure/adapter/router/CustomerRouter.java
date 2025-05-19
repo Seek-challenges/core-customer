@@ -17,9 +17,9 @@ class CustomerRouter {
     @Bean
     public RouterFunction<ServerResponse> customerRoutes(CustomerHandlerPort customerHandler) {
         return route(POST(BASE_PATH), customerHandler::createCustomer)
-                .andRoute(GET(BASE_PATH + "/{phone}"), customerHandler::getCustomerByPhone)
+                .andRoute(GET(BASE_PATH + "/phone/{phone}"), customerHandler::getCustomerByPhone)
                 .andRoute(GET(BASE_PATH + "/all"), customerHandler::getAllCustomers)
-                .andRoute(PUT(BASE_PATH + "/{phone}"), customerHandler::updateCustomer)
+                .andRoute(PUT(BASE_PATH + "/phone/{phone}"), customerHandler::updateCustomer)
                 .andRoute(DELETE(BASE_PATH + "/{phone}"), customerHandler::deleteCustomer);
     }
 }
