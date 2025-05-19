@@ -18,7 +18,7 @@ jobs:
     - name: Checkout manifests repo
       uses: actions/checkout@v4
       with:
-        repository: ArturoDiaz/k8s-manifests
+        repository: Seek-challenges/k8s-manifests
         token: ${{ secrets.GH_PAT }}
         path: k8s-manifests
 
