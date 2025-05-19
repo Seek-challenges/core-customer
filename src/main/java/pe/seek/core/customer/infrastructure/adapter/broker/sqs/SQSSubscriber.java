@@ -1,6 +1,7 @@
 package pe.seek.core.customer.infrastructure.adapter.broker.sqs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,8 @@ import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
 import software.amazon.awssdk.services.sqs.model.Message;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @Slf4j
 @Component
 @Profile({"prod"})
@@ -31,8 +34,15 @@ class SQSSubscriber {
     @Value("${aws.cloud.sqs.consumer.create-customer-fallback}")
     private String s3QueueUrl;
 
+    private final AtomicBoolean shuttingDown = new AtomicBoolean(false);
+
     @Scheduled(fixedDelay = 5000)
     public void pollMessages() {
+        if (shuttingDown.get()) {
+            log.info("🚫 Polling detenido: app en shutdown.");
+            return;
+        }
+
         ReceiveMessageRequest receiveRequest = ReceiveMessageRequest.builder()
                 .queueUrl(s3QueueUrl)
                 .maxNumberOfMessages(5)
@@ -73,5 +83,11 @@ class SQSSubscriber {
                 .doOnSuccess(resp -> log.info("🧹 Mensaje borrado exitosamente: {}", message.messageId()))
                 .doOnError(ex -> log.error("❌ Error al borrar mensaje", ex))
                 .then();
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        log.info("🧵 Marcando apagado del SQSSubscriber");
+        shuttingDown.set(true);
     }
 }
