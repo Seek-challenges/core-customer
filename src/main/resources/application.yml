@@ -32,8 +32,8 @@ spring:
     locations: classpath:db/migration
   data:
     redis:
-      host: ${REDIS_HOST:redis}
-      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST_2:redis}
+      port: ${REDIS_PORT_2:6379}
   cache:
     type: redis
     redis:
