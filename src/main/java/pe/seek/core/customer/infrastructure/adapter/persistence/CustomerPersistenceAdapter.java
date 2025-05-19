@@ -51,6 +51,7 @@ class CustomerPersistenceAdapter implements PersistenceAdapterPort {
 
     @Override
     public Flux<Customer> getAllCustomers() {
+        log.info("Retrieving all customers");
         return repository.findAll()
                 .map(customerMapper::toDomainFromEntity)
                 .doOnError(e -> log.error("Error retrieving all customers: {}", e.getMessage(), e));

@@ -34,6 +34,7 @@ class CustomerService implements CustomerServicePort {
 
     @Override
     public Flux<Customer> getAllCustomers() {
+        log.info("Retrieving all customers");
         return persistenceAdapter.getAllCustomers()
                 .doOnComplete(() -> log.info("All customers retrieved successfully"))
                 .doOnError(e -> log.error("Error retrieving all customers: {}", e.getMessage(), e));

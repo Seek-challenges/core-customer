@@ -26,6 +26,7 @@ class CustomerHandler implements CustomerHandlerPort{
 
     @Override
     public Mono<ServerResponse> createCustomer(ServerRequest request) {
+        log.info("Creating customer");
         return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(dto -> handlerValidator.validate(dto, CreatedCustomerGroup.class)
                         .flatMap(validDto -> customerServicePort.createCustomer(
@@ -44,6 +45,7 @@ class CustomerHandler implements CustomerHandlerPort{
 
     @Override
     public Mono<ServerResponse> getCustomerByPhone(ServerRequest request) {
+        log.info("Retrieving customer by phone: {}", request.pathVariable("phone"));
         String phone = request.pathVariable("phone");
         return customerServicePort.getCustomerByPhone(phone)
                 .doOnSuccess(customerDomain -> log.info("Customer found: {}", customerDomain.getPhone()))
@@ -58,6 +60,7 @@ class CustomerHandler implements CustomerHandlerPort{
 
     @Override
     public Mono<ServerResponse> getAllCustomers(ServerRequest request) {
+        log.info("Retrieving all customers");
         return customerServicePort.getAllCustomers()
                 .map(customerMapper::toResponseDTOFromDomain)
                 .collectList()
@@ -72,6 +75,7 @@ class CustomerHandler implements CustomerHandlerPort{
     @Override
     public Mono<ServerResponse> updateCustomer(ServerRequest request) {
         String phone = request.pathVariable("phone");
+        log.info("Updating customer with phone: {}", request.pathVariable(phone));
         return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(dto -> handlerValidator.validate(dto)
                         .flatMap(validDto -> customerServicePort.updateCustomer(
